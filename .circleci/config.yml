@@ -100,11 +100,5 @@ workflows:
   version: 2
   publish_docs_cron_job:
     when: << pipeline.parameters.run_workflow_publish_docs >>
-    triggers:
-      - schedule:
-          cron: "0 6 * * *"
-          filters:
-            branches:
-              only: dev
     jobs:
       - publish_docs
