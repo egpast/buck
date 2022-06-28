@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  run_workflow_publish_docs:
+    default: true
+    type: boolean
+
 orbs:
   win: circleci/windows@2.2.0
 
@@ -94,6 +99,7 @@ jobs:
 workflows:
   version: 2
   publish_docs_cron_job:
+    when: << pipeline.parameters.run_workflow_publish_docs >>
     triggers:
       - schedule:
           cron: "0 6 * * *"
