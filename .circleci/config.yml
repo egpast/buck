@@ -32,7 +32,7 @@ install_android_sdk: &install_android_sdk
     cd "${ANDROID_SDK}"
     curl -O "https://dl.google.com/android/repository/${sdk_zip_filename}"
     unzip "${sdk_zip_filename}"
-    export PATH="${ANDROID_SDK}/cmdline-tools/latest/bin:${PATH}"
+    export PATH="${ANDROID_SDK}/cmdline-tools/bin:${PATH}"
     echo 'y' |sdkmanager --install tools
     echo 'y' |sdkmanager --install platform-tools
     echo 'y' |sdkmanager --install "build-tools;28.0.0"
