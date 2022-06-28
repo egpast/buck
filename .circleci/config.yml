@@ -28,11 +28,12 @@ install_android_sdk: &install_android_sdk
       sdk_os="mac"
     fi
     sdk_zip_filename="commandlinetools-${sdk_os}-8512546_latest.zip"
-    mkdir -p "${ANDROID_SDK}"
-    cd "${ANDROID_SDK}"
+    mkdir -p "${ANDROID_SDK}/cmdline-tools"
+    cd "${ANDROID_SDK}/cmdline-tools"
     curl -O "https://dl.google.com/android/repository/${sdk_zip_filename}"
     unzip "${sdk_zip_filename}"
-    export PATH="${ANDROID_SDK}/cmdline-tools/bin:${PATH}"
+    mv cmdline-tools latest
+    export PATH="${ANDROID_SDK}/cmdline-tools/latest/bin:${PATH}"
     echo 'y' |sdkmanager --install tools
     echo 'y' |sdkmanager --install platform-tools
     echo 'y' |sdkmanager --install "build-tools;28.0.0"
