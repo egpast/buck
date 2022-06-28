@@ -7,43 +7,6 @@ parameters:
 
 orbs:
   win: circleci/windows@2.2.0
-  
-install_openjdk8: &install_openjdk8
-  name: Install OpenJDK8
-  command: |
-    if [ "${PLATFORM}" == "linux" ]; then
-      sudo apt-get update && sudo apt-get install openjdk-8-jdk
-      sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
-    elif [ "${PLATFORM}" == "macos" ]; then
-      brew install openjdk@8
-      export PATH="/usr/local/opt/openjdk@8/bin:$PATH"
-    fi
-    java -version
-
-install_android_sdk: &install_android_sdk
-  name: Install Android SDK
-  command: |
-    sdk_os="linux"
-    if [ "${PLATFORM}" == "macos" ]; then
-      sdk_os="darwin"
-    fi
-    sdk_zip_filename="sdk-tools-${sdk_os}-4333796.zip"
-    mkdir -p "${ANDROID_SDK}"
-    cd "${ANDROID_SDK}"
-    curl -O "https://dl.google.com/android/repository/${sdk_zip_filename}"
-    unzip "${sdk_zip_filename}"
-    export PATH="${ANDROID_SDK}/tools/bin:${PATH}"
-    echo 'y' |sdkmanager --install tools
-    echo 'y' |sdkmanager --install platform-tools
-    echo 'y' |sdkmanager --install "build-tools;28.0.0"
-    echo 'y' |sdkmanager --install "platforms;android-23"
-
-    # Install 32 bit libraries
-    # https://stackoverflow.com/questions/36911709/cannot-run-program-aapt
-    # Needed to run Android build-tools
-    if [ "${PLATFORM}" == "linux" ]; then
-      sudo apt-get install gcc-multilib lib32z1 lib32stdc++6
-    fi
 
 install_openjdk11: &install_openjdk11
   name: Install OpenJDK11
@@ -56,6 +19,31 @@ install_openjdk11: &install_openjdk11
       export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
     fi
     java -version
+
+install_android_sdk: &install_android_sdk
+  name: Install Android SDK
+  command: |
+    sdk_os="linux"
+    if [ "${PLATFORM}" == "macos" ]; then
+      sdk_os="mac"
+    fi
+    sdk_zip_filename="commandlinetools-${sdk_os}-8512546_latest.zip"
+    mkdir -p "${ANDROID_SDK}"
+    cd "${ANDROID_SDK}"
+    curl -O "https://dl.google.com/android/repository/${sdk_zip_filename}"
+    unzip "${sdk_zip_filename}"
+    export PATH="${ANDROID_SDK}/cmdline-tools/latest/bin:${PATH}"
+    echo 'y' |sdkmanager --install tools
+    echo 'y' |sdkmanager --install platform-tools
+    echo 'y' |sdkmanager --install "build-tools;28.0.0"
+    echo 'y' |sdkmanager --install "platforms;android-23"
+
+    # Install 32 bit libraries
+    # https://stackoverflow.com/questions/36911709/cannot-run-program-aapt
+    # Needed to run Android build-tools
+    if [ "${PLATFORM}" == "linux" ]; then
+      sudo apt-get install gcc-multilib lib32z1 lib32stdc++6
+    fi
 
 install_python: &install_python
   name: Install Python 3.6.2
@@ -87,13 +75,10 @@ jobs:
     steps:
       - checkout
       - run:
-          # ???
-          <<: *install_openjdk8
+          <<: *install_openjdk11
       - run:
           # android_sdk needed to build java docs.
           <<: *install_android_sdk
-      - run:
-          <<: *install_openjdk11
       - run:
           <<: *install_python
       - run:
