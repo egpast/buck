@@ -92,7 +92,7 @@ jobs:
             ./publish.sh --start-soyweb
 
 workflows:
-  version: 2.1
+  version: 2
   publish_docs_cron_job:
     triggers:
       - schedule:
