@@ -78,7 +78,7 @@ run_buck_build: &run_buck_build
     export PATH="${ANDROID_SDK}/tools/bin:${PATH}"
     export PATH="$(pyenv root)/shims:${PATH}"
     set -ex
-    ./bin/buck build buck --out "${BUCK_PEX_LOCATION}" || { cat "buck-out/log/buck-0.log"; exit 1; }
+    ./bin/buck build buck --out "./${BUCK_PEX_LOCATION}" || { cat "buck-out/log/buck-0.log"; exit 1; }
 
 linux_environment: &linux_environment
   # Use string constant for values, no environment variables
@@ -87,7 +87,7 @@ linux_environment: &linux_environment
   ANDROID_SDK: "/home/circleci/android-sdk"
   TERM: "dumb"
   BUCK_NUM_THREADS: 3
-  BUCK_PEX_LOCATION: "./new_buck.pex"
+  BUCK_PEX_LOCATION: "new_buck.pex"
 
 jobs:
   publish_docs:
