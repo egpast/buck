@@ -47,13 +47,13 @@ install_android_sdk: &install_android_sdk
     fi
 
 install_python: &install_python
-  name: Install Python 3.6.2
+  name: Install Python 3.9.4
   command: |
     if [ "${PLATFORM}" == "macos" ]; then
       brew install pyenv
     fi
-    pyenv install -s 3.6.2
-    pyenv global 3.6.2 system
+    pyenv install -s 3.9.4
+    pyenv global 3.9.4 system
     export PATH="$(pyenv root)/shims:${PATH}"
     python --version
 
