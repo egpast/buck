@@ -28,6 +28,6 @@ cd "$BUCK_DIR" || exit
 ant clean
 
 cd "$BUCK_DIR/docs" || exit
-buck run //docs:generate_buckconfig_aliases
+"${BUCKROOT}/${BUCK_PEX_LOCATION}" run //docs:generate_buckconfig_aliases
 exec java -jar plovr-81ed862.jar soyweb --port 9814 --dir . --globals globals.json
 
