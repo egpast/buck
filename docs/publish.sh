@@ -66,7 +66,7 @@ STATIC_FILES_DIR=$(mktemp -d)
 
 # Always run this from the the docs dir
 cd "$DOCS_DIR"
-"$BUCK_PEX_LOCATION" run //docs:generate_buckconfig_aliases
+"${BUCKROOT}/${BUCK_PEX_LOCATION}" run //docs:generate_buckconfig_aliases
 
 if ( [[ -n $IS_GIT ]] && ! git diff --quiet ) || hg status | grep -q .; then
   echo "Repository is not clean; refusing to publish"
