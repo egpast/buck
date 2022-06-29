@@ -116,11 +116,5 @@ jobs:
 workflows:
   version: 2.1
   publish_docs_cron_job:
-    triggers:
-      - schedule:
-          cron: "0 6 * * *"
-          filters:
-            branches:
-              only: dev
     jobs:
       - publish_docs
