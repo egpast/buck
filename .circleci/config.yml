@@ -115,8 +115,10 @@ jobs:
           name: Publish docs
           command: |
             export ANDROID_HOME="${ANDROID_SDK}"
+            alias buck="${BUCKROOT}/${BUCK_PEX_LOCATION}"
             cd docs
             ./publish.sh --start-soyweb
+            unalias buck
 
 workflows:
   version: 2
