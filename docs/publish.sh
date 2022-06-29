@@ -97,6 +97,9 @@ fi
 
 echo "Documentation working directory is ${STATIC_FILES_DIR}"
 
+# Exit early to avoid actually publishing docs.
+exit 0
+
 # Create a clean checkout of the gh-pages branch with no data:
 if [ -z "$1" ]
 then
